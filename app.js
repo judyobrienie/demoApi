@@ -24,6 +24,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 require('./routes')(app);
 
+    
+app.use(function (req, res, next) {
+    //website i wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+
+    //request methods
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    //request headers to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+   
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
